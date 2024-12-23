@@ -14,7 +14,8 @@ class CreateUserPasswordHistory
         $data = $event->bindings;
 
         // Is not from Admin
-        if (! isset($data['fromAdmin'])) {
+      $notifyNewUsersOfExport = setting("iprofile::notifyNewUsersOfExport", null, 0);
+        if (!isset($data['fromAdmin']) && !$notifyNewUsersOfExport) {
             $historyCreated = UserPasswordHistory::create([
                 'user_id' => $user->id,
                 'password' => $user->password,
